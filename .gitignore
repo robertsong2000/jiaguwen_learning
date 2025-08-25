@@ -1,0 +1,163 @@
+# 依赖目录
+node_modules/
+*/node_modules/
+
+# 日志文件
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime数据
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage目录
+lib-cov
+coverage/
+*.lcov
+.nyc_output
+
+# Grunt中间文件和输出目录
+.grunt
+
+# Bower依赖目录
+bower_components
+
+# node-waf配置
+.lock-wscript
+
+# 编译后的二进制文件
+build/Release
+
+# 依赖目录
+node_modules/
+jspm_packages/
+
+# TypeScript v1声明文件
+typings/
+
+# TypeScript缓存
+*.tsbuildinfo
+
+# Optional npm缓存目录
+.npm
+
+# Optional eslint缓存
+.eslintcache
+
+# Microbundle缓存
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL历史记录
+.node_repl_history
+
+# 输出目录
+*.tgz
+
+# Yarn完整性文件
+.yarn-integrity
+
+# dotenv环境变量文件
+.env
+.env.test
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# parcel-bundler缓存
+.cache
+.parcel-cache
+
+# Next.js构建输出
+.next
+
+# Nuxt.js构建和生成输出
+.nuxt
+dist
+
+# Gatsby文件
+.cache/
+public
+
+# Storybook构建输出
+.out
+.storybook-out
+
+# Rollup.js默认构建输出
+.rollup.cache
+
+# Temporary文件夹
+tmp/
+temp/
+
+# 前端特定规则
+# React构建输出
+frontend/build/
+
+# Create React App测试覆盖率
+frontend/coverage/
+
+# 后端特定规则
+# MongoDB数据文件
+*.db
+data/
+dumps/
+
+# PM2配置
+ecosystem.config.js
+
+# IDE和编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 备份文件
+*.bak
+*.backup
+*.tmp
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+
+# 密钥和证书
+*.key
+*.pem
+*.p12
+*.pfx
+
+# 部署相关
+.serverless/
+.vercel
+
+# 开发工具
+.eslintcache
+.stylelintcache
+
+# 测试覆盖率报告
+coverage/
+.nyc_output
+
+# Qoder IDE相关
+.qoder/

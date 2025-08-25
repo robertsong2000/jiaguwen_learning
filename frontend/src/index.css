@@ -1,0 +1,380 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+/* 甲骨文字体 */
+/*
+@font-face {
+  font-family: 'Oracle Bone Script Font';
+  src: url('./assets/fonts/oracle-bone.woff2') format('woff2'),
+       url('./assets/fonts/oracle-bone.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* 全局基础样式 */
+body {
+  margin: 0;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FFFFF0; /* ivory */
+  color: #333;
+  line-height: 1.6;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B4513;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A0522D;
+}
+
+/* 选中文本样式 */
+::selection {
+  background-color: rgba(139, 69, 19, 0.2);
+  color: #8B4513;
+}
+
+/* 通用动画类 */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.bounce-in {
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 甲骨文字符相关样式 */
+.oracle-character {
+  font-family: 'Oracle Bone Script Font', serif;
+  font-weight: normal;
+  line-height: 1;
+  letter-spacing: 0.1em;
+}
+
+.oracle-character-large {
+  font-family: 'Oracle Bone Script Font', serif;
+  font-size: 6rem;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.3);
+}
+
+.modern-character {
+  font-family: 'Noto Sans SC', serif;
+  font-weight: 600;
+  color: #8B4513;
+}
+
+.modern-character-large {
+  font-family: 'Noto Sans SC', serif;
+  font-weight: 700;
+  font-size: 3rem;
+  color: #8B4513;
+  text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.2);
+}
+
+/* 古典装饰元素 */
+.ancient-border {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #8B4513, #FF4500, #8B4513) 1;
+  position: relative;
+}
+
+.ancient-border::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid #FFD700;
+  z-index: -1;
+}
+
+/* 渐变背景 */
+.ancient-gradient {
+  background: linear-gradient(135deg, 
+    #FFFFF0 0%, 
+    rgba(139, 69, 19, 0.05) 25%, 
+    rgba(255, 69, 0, 0.05) 50%, 
+    rgba(139, 69, 19, 0.05) 75%, 
+    #FFFFF0 100%);
+}
+
+/* 卡片阴影效果 */
+.ancient-shadow {
+  box-shadow: 
+    0 4px 6px rgba(139, 69, 19, 0.1),
+    0 1px 3px rgba(139, 69, 19, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.ancient-shadow-lg {
+  box-shadow: 
+    0 10px 15px rgba(139, 69, 19, 0.1),
+    0 4px 6px rgba(139, 69, 19, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 悬浮效果 */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 15px 25px rgba(139, 69, 19, 0.15),
+    0 5px 10px rgba(139, 69, 19, 0.1);
+}
+
+/* 按钮样式 */
+.btn-ancient {
+  background: linear-gradient(135deg, #8B4513, #A0522D);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ancient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-ancient:hover::before {
+  left: 100%;
+}
+
+.btn-ancient:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(139, 69, 19, 0.3);
+}
+
+/* 输入框样式 */
+.input-ancient {
+  border: 2px solid #D2B48C;
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 240, 0.8);
+}
+
+.input-ancient:focus {
+  border-color: #8B4513;
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+  background: white;
+}
+
+/* 文本样式 */
+.text-ancient {
+  color: #8B4513;
+}
+
+.text-secondary-ancient {
+  color: #A0522D;
+}
+
+.text-muted-ancient {
+  color: #8B7D6B;
+}
+
+/* 链接样式 */
+a {
+  color: #8B4513;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #A0522D;
+  text-decoration: underline;
+}
+
+/* Ant Design 组件样式覆盖 */
+.ant-card {
+  border-radius: 12px;
+  border: 1px solid rgba(139, 69, 19, 0.1);
+}
+
+.ant-card-head {
+  border-bottom-color: rgba(139, 69, 19, 0.1);
+}
+
+.ant-btn-primary {
+  background: linear-gradient(135deg, #8B4513, #A0522D) !important;
+  border-color: #8B4513 !important;
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #A0522D, #8B4513) !important;
+  border-color: #A0522D !important;
+}
+
+.ant-input:focus {
+  border-color: #8B4513 !important;
+  box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.1) !important;
+}
+
+.ant-pagination-item-active {
+  border-color: #8B4513 !important;
+}
+
+.ant-pagination-item-active a {
+  color: #8B4513 !important;
+}
+
+.ant-tag {
+  border-radius: 6px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .oracle-character-large {
+    font-size: 4rem;
+  }
+  
+  .modern-character-large {
+    font-size: 2rem;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .oracle-character-large {
+    font-size: 3rem;
+  }
+  
+  .modern-character-large {
+    font-size: 1.5rem;
+  }
+  
+  .btn-ancient {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+/* 加载动画 */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(139, 69, 19, 0.3);
+  border-radius: 50%;
+  border-top-color: #8B4513;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 错误和成功状态样式 */
+.text-success {
+  color: #52c41a;
+}
+
+.text-error {
+  color: #ff4d4f;
+}
+
+.text-warning {
+  color: #faad14;
+}
+
+/* 打印样式 */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .ancient-shadow,
+  .ancient-shadow-lg {
+    box-shadow: none;
+  }
+  
+  .oracle-character-large {
+    color: black;
+    text-shadow: none;
+  }
+}
