@@ -202,9 +202,7 @@ const UserSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// 创建索引
-UserSchema.index({ username: 1 });
-UserSchema.index({ email: 1 });
+// 创建其他索引
 UserSchema.index({ 'learningProgress.level': 1 });
 UserSchema.index({ isActive: 1 });
 UserSchema.index({ role: 1 });

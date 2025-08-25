@@ -19,7 +19,7 @@ const { authMiddleware } = require('./middleware/auth');
 const progressTracker = require('./middleware/progressTracker');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT) || 5000;
 
 // Security middleware
 app.use(helmet());
@@ -76,18 +76,30 @@ app.use(errorHandler);
 // MongoDB connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jiaguwen_learning';
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(MONGODB_URI)
 .then(() => {
   console.log('✅ MongoDB连接成功');
   
-  // Start server
-  app.listen(PORT, () => {
-    console.log(`🚀 服务器运行在端口 ${PORT}`);
-    console.log(`📖 API文档: http://localhost:${PORT}/health`);
-  });
+  // Start server with error handling for port conflicts
+  const startServer = (port) => {
+    const server = app.listen(port, () => {
+      console.log(`🚀 服务器运行在端口 ${port}`);
+      console.log(`📖 API文档: http://localhost:${port}/health`);
+      console.log(`📝 前端配置: 请在 frontend/.env 中设置 REACT_APP_API_URL=http://localhost:${port}/api`);
+    });
+    
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE' && port < PORT + 10) {
+        console.log(`❌ 端口 ${port} 已被占用，尝试端口 ${port + 1}`);
+        startServer(port + 1);
+      } else {
+        console.error('❌ 服务器启动失败:', err.message);
+        process.exit(1);
+      }
+    });
+  };
+  
+  startServer(PORT);
 })
 .catch((error) => {
   console.error('❌ MongoDB连接失败:', error.message);
