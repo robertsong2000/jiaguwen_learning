@@ -141,6 +141,18 @@ export interface PaginatedResponse<T> {
   totalPages: number;
 }
 
+// 匹配后端实际返回的字符列表结构
+export interface CharacterApiResponse {
+  characters: Character[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalCount: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+}
+
 // State types
 export interface CharacterState {
   list: Character[];

@@ -14,7 +14,7 @@ const { Title, Paragraph } = Typography;
 
 const CharacterExplorer: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { list: characters, loading, selected: selectedCharacter, filters } = useAppSelector(state => state.characters);
+  const { list: characters = [], loading, selected: selectedCharacter, filters } = useAppSelector(state => state.characters);
   
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -69,7 +69,7 @@ const CharacterExplorer: React.FC = () => {
       stats += `${filters.category}类 `;
     }
     
-    if (filters.difficulty && filters.difficulty.length > 0) {
+    if (filters.difficulty && Array.isArray(filters.difficulty) && filters.difficulty.length > 0) {
       const difficultyText = filters.difficulty.length === 1 
         ? `难度${filters.difficulty[0]}级`
         : `难度${Math.min(...filters.difficulty)}-${Math.max(...filters.difficulty)}级`;
@@ -167,19 +167,19 @@ const CharacterExplorer: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                 <div>
                   <div className="text-2xl font-bold text-blue-600 mb-2">
-                    {characters.filter(c => c.difficulty <= 2).length}
+                    {characters?.filter(c => c?.difficulty <= 2).length || 0}
                   </div>
                   <div className="text-gray-600">适合入门的字符</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-green-600 mb-2">
-                    {characters.filter(c => c.category === '人物').length}
+                    {characters?.filter(c => c?.category === '人物').length || 0}
                   </div>
                   <div className="text-gray-600">人物相关字符</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-orange-600 mb-2">
-                    {characters.filter(c => c.category === '自然').length}
+                    {characters?.filter(c => c?.category === '自然').length || 0}
                   </div>
                   <div className="text-gray-600">自然相关字符</div>
                 </div>

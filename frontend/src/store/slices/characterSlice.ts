@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Character, CharacterState, FilterConfig, PaginatedResponse } from '../types';
+import { Character, CharacterState, FilterConfig, PaginatedResponse, CharacterApiResponse } from '../types';
 import { characterAPI } from '../../services/api';
 
 // Async thunks
@@ -71,13 +71,21 @@ const characterSlice = createSlice({
       })
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.loading = false;
-        const response = action.payload.data;
-        state.list = response.data;
-        state.pagination = {
-          page: response.page,
-          limit: response.limit,
-          total: response.total,
-        };
+        // 实际API返回的是 { success: boolean, data: { characters: [], pagination: {} } }
+        const apiResponse = action.payload;
+        if (apiResponse.success && apiResponse.data) {
+          const charactersData = apiResponse.data as unknown as CharacterApiResponse;
+          state.list = charactersData.characters || [];
+          if (charactersData.pagination) {
+            state.pagination = {
+              page: charactersData.pagination.currentPage || 1,
+              limit: 12, // 默认值，后端似乎没有返回limit
+              total: charactersData.pagination.totalCount || 0,
+            };
+          }
+        } else {
+          state.list = [];
+        }
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.loading = false;
@@ -90,7 +98,8 @@ const characterSlice = createSlice({
       })
       .addCase(fetchCharacterById.fulfilled, (state, action) => {
         state.loading = false;
-        state.selected = action.payload.data;
+        const apiResponse = action.payload;
+        state.selected = (apiResponse.success && apiResponse.data) ? apiResponse.data : null;
       })
       .addCase(fetchCharacterById.rejected, (state, action) => {
         state.loading = false;
@@ -103,7 +112,8 @@ const characterSlice = createSlice({
       })
       .addCase(searchCharacters.fulfilled, (state, action) => {
         state.loading = false;
-        state.list = action.payload.data;
+        const apiResponse = action.payload;
+        state.list = (apiResponse.success && apiResponse.data) ? apiResponse.data : [];
       })
       .addCase(searchCharacters.rejected, (state, action) => {
         state.loading = false;
