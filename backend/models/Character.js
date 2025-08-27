@@ -35,10 +35,19 @@ const CharacterSchema = new mongoose.Schema({
     trim: true,
     validate: {
       validator: function(v) {
-        return !v || v.startsWith('http');
+        return !v || v.startsWith('http') || v.startsWith('/images/');
       },
-      message: '图片URL格式不正确'
+      message: '图片URL格式不正确，应为HTTP(S)链接或本地路径（/images/开头）'
     }
+  },
+  hasImage: {
+    type: Boolean,
+    default: false
+  },
+  imageAlt: {
+    type: String,
+    trim: true,
+    maxlength: [100, '图片描述长度不能超过100个字符']
   },
   strokeOrder: [{
     type: String,
@@ -163,6 +172,15 @@ CharacterSchema.pre('save', function(next) {
       id => !id.equals(this._id)
     );
   }
+  
+  // 自动设置hasImage标志
+  this.hasImage = !!(this.imageUrl && this.imageUrl.trim());
+  
+  // 如果没有设置图片描述，自动生成
+  if (this.hasImage && !this.imageAlt) {
+    this.imageAlt = `${this.modernForm}字的甲骨文字形`;
+  }
+  
   next();
 });
 

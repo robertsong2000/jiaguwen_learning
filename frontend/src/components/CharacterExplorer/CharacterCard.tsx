@@ -3,6 +3,7 @@ import { Card, Typography, Tag, Badge, Button, Tooltip } from 'antd';
 import { HeartOutlined, HeartFilled, StarOutlined, StarFilled, EyeOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import { Character } from '../../store/types';
+import OracleImage from '../Common/OracleImage';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -46,8 +47,12 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
     <div className="character-card-content">
       {/* 字符主体 */}
       <div className="text-center mb-4">
-        <div className="oracle-character text-6xl mb-2 font-oracle text-ancient-brown">
-          {character.oracleForm}
+        <div className="mb-2 flex justify-center">
+          <OracleImage 
+            character={character}
+            size={compact ? 'small' : 'medium'}
+            showFallback={true}
+          />
         </div>
         <Title level={3} className="modern-character text-ancient-brown mb-1">
           {character.modernForm}

@@ -5,12 +5,12 @@ require('dotenv').config();
 // 甲骨文字符种子数据
 const characterSeeds = [
   {
-    oracleForm: '𠂇',
+    oracleForm: '人', // 使用现代字作为占位符，实际项目中应替换为图片
     modernForm: '人',
     pronunciation: 'rén',
     meaning: '人类，指具有思维能力的高等生物',
     etymology: '甲骨文的\"人\"字像一个侧身而立的人形，突出了人的直立行走特征。整个字形生动地展现了人的基本轮廓。',
-    imageUrl: 'https://example.com/images/ren.jpg',
+    imageUrl: '/images/oracle/人.png',
     strokeOrder: ['丿', '乀'],
     difficulty: 1,
     category: '人物',
@@ -18,12 +18,12 @@ const characterSeeds = [
     tags: ['基础', '常用', '象形']
   },
   {
-    oracleForm: '𠃍',
+    oracleForm: '大', // 修改无法显示的Unicode字符
     modernForm: '大',
     pronunciation: 'dà',
     meaning: '体积、面积、数量、强度等方面超过一般或超过所比较的对象',
     etymology: '甲骨文的\"大\"字像一个人张开双臂双腿站立的样子，表示人的最大形态，引申为大的概念。',
-    imageUrl: 'https://example.com/images/da.jpg',
+    imageUrl: '/images/oracle/大.png',
     strokeOrder: ['一', '丿', '乀'],
     difficulty: 1,
     category: '抽象概念',
@@ -31,12 +31,12 @@ const characterSeeds = [
     tags: ['基础', '形容词', '象形']
   },
   {
-    oracleForm: '𡗗',
+    oracleForm: '女', // 修改无法显示的Unicode字符
     modernForm: '女',
     pronunciation: 'nǚ',
     meaning: '成年的雌性人类',
     etymology: '甲骨文的\"女\"字像一个跪坐的女性形象，双手交叉在胸前，体现了古代女性的典型姿态。',
-    imageUrl: 'https://example.com/images/nv.jpg',
+    imageUrl: '/images/oracle/女.png',
     strokeOrder: ['フ', '一', 'フ'],
     difficulty: 1,
     category: '人物',
@@ -44,12 +44,12 @@ const characterSeeds = [
     tags: ['基础', '性别', '象形']
   },
   {
-    oracleForm: '𝃵',
+    oracleForm: '子', // 修改无法显示的Unicode字符
     modernForm: '子',
     pronunciation: 'zǐ',
     meaning: '儿子；孩子；种子',
     etymology: '甲骨文的\"子\"字像一个婴儿的形象，头大身小，双臂展开，生动地表现了幼儿的特征。',
-    imageUrl: 'https://example.com/images/zi.jpg',
+    imageUrl: '/images/oracle/子.png',
     strokeOrder: ['一', '丨', '一'],
     difficulty: 1,
     category: '人物',
@@ -57,12 +57,12 @@ const characterSeeds = [
     tags: ['基础', '家庭', '象形']
   },
   {
-    oracleForm: '𠂤',
+    oracleForm: '王',
     modernForm: '王',
     pronunciation: 'wáng',
     meaning: '古代统治者的称号；现指君主',
     etymology: '甲骨文的\"王\"字像一把斧头，象征着权力和武力，是统治者身份的象征。',
-    imageUrl: 'https://example.com/images/wang.jpg',
+    imageUrl: '/images/oracle/王.png',
     strokeOrder: ['一', '一', '丨', '一'],
     difficulty: 2,
     category: '人物',
@@ -70,12 +70,12 @@ const characterSeeds = [
     tags: ['权力', '政治', '象形']
   },
   {
-    oracleForm: '𠃬',
+    oracleForm: '马',
     modernForm: '马',
     pronunciation: 'mǎ',
     meaning: '一种家畜，用于骑乘、驮载或拉车',
     etymology: '甲骨文的\"马\"字生动地描绘了马的侧面形象，包括马头、鬃毛、身体和四条腿的特征。',
-    imageUrl: 'https://example.com/images/ma.jpg',
+    imageUrl: '/images/oracle/马.png',
     strokeOrder: ['フ', '一', '丨', 'フ'],
     difficulty: 2,
     category: '动物',
@@ -83,12 +83,12 @@ const characterSeeds = [
     tags: ['动物', '交通', '象形']
   },
   {
-    oracleForm: '𠃥',
+    oracleForm: '牛',
     modernForm: '牛',
     pronunciation: 'niú',
     meaning: '一种大型家畜，用于耕作和食用',
     etymology: '甲骨文的\"牛\"字像牛的正面形象，突出了牛的两个角和面部特征。',
-    imageUrl: 'https://example.com/images/niu.jpg',
+    imageUrl: '/images/oracle/牛.png',
     strokeOrder: ['丿', '一', '丨', '一'],
     difficulty: 2,
     category: '动物',
@@ -96,12 +96,12 @@ const characterSeeds = [
     tags: ['动物', '农业', '象形']
   },
   {
-    oracleForm: '𦘔',
+    oracleForm: '羊',
     modernForm: '羊',
     pronunciation: 'yáng',
     meaning: '一种家畜，毛可纺织，肉可食用',
     etymology: '甲骨文的\"羊\"字突出了羊的角和温顺的特征，是典型的象形文字。',
-    imageUrl: 'https://example.com/images/yang.jpg',
+    imageUrl: '/images/oracle/羊.png',
     strokeOrder: ['丷', '一', '丨', '一'],
     difficulty: 2,
     category: '动物',
@@ -109,12 +109,12 @@ const characterSeeds = [
     tags: ['动物', '祭祀', '象形']
   },
   {
-    oracleForm: '𠂹',
+    oracleForm: '水',
     modernForm: '水',
     pronunciation: 'shuǐ',
     meaning: '无色无味的液体，生命之源',
     etymology: '甲骨文的\"水\"字像流动的水流，中间一竖代表主流，两边的点代表水滴。',
-    imageUrl: 'https://example.com/images/shui.jpg',
+    imageUrl: '/images/oracle/水.png',
     strokeOrder: ['丨', '丿', '丶', '乀'],
     difficulty: 2,
     category: '自然',
@@ -122,12 +122,12 @@ const characterSeeds = [
     tags: ['自然', '元素', '象形']
   },
   {
-    oracleForm: '𤆍',
+    oracleForm: '火',
     modernForm: '火',
     pronunciation: 'huǒ',
     meaning: '燃烧现象，产生光和热',
     etymology: '甲骨文的\"火\"字像燃烧的火焰形状，生动地表现了火的动态特征。',
-    imageUrl: 'https://example.com/images/huo.jpg',
+    imageUrl: '/images/oracle/火.png',
     strokeOrder: ['丶', '丿', '丿', '乀'],
     difficulty: 2,
     category: '自然',
@@ -135,12 +135,12 @@ const characterSeeds = [
     tags: ['自然', '元素', '象形']
   },
   {
-    oracleForm: '𡈽',
+    oracleForm: '土',
     modernForm: '土',
     pronunciation: 'tǔ',
     meaning: '地球表面的泥沙混合物；土地',
     etymology: '甲骨文的\"土\"字像一个土堆的形状，或者是神位的象征。',
-    imageUrl: 'https://example.com/images/tu.jpg',
+    imageUrl: '/images/oracle/土.png',
     strokeOrder: ['一', '丨', '一'],
     difficulty: 1,
     category: '自然',
@@ -148,12 +148,12 @@ const characterSeeds = [
     tags: ['自然', '农业', '象形']
   },
   {
-    oracleForm: '𡴙',
+    oracleForm: '山',
     modernForm: '山',
     pronunciation: 'shān',
     meaning: '地面上由土石构成的高耸部分',
     etymology: '甲骨文的\"山\"字像山峰的轮廓，三个突起代表连绵的山峰。',
-    imageUrl: 'https://example.com/images/shan.jpg',
+    imageUrl: '/images/oracle/山.png',
     strokeOrder: ['丨', 'フ', 'フ', 'フ'],
     difficulty: 2,
     category: '自然',
@@ -161,12 +161,12 @@ const characterSeeds = [
     tags: ['自然', '地形', '象形']
   },
   {
-    oracleForm: '𣄼',
+    oracleForm: '日', // 修改无法显示的Unicode字符
     modernForm: '日',
     pronunciation: 'rì',
     meaning: '太阳；一昼夜；日子',
     etymology: '甲骨文的\"日\"字像太阳的形状，圆形中间有一点，代表太阳的光芒。',
-    imageUrl: 'https://example.com/images/ri.jpg',
+    imageUrl: '/images/oracle/日.png',
     strokeOrder: ['丨', '一', '一', '一'],
     difficulty: 1,
     category: '自然',
@@ -174,12 +174,12 @@ const characterSeeds = [
     tags: ['自然', '天体', '象形']
   },
   {
-    oracleForm: '𣎓',
+    oracleForm: '月',
     modernForm: '月',
     pronunciation: 'yuè',
     meaning: '地球的天然卫星；月份',
     etymology: '甲骨文的\"月\"字像月牙的形状，弯弯的弧形很好地表现了月亮的特征。',
-    imageUrl: 'https://example.com/images/yue.jpg',
+    imageUrl: '/images/oracle/月.png',
     strokeOrder: ['丿', '一', '一', 'フ'],
     difficulty: 1,
     category: '自然',
@@ -187,12 +187,12 @@ const characterSeeds = [
     tags: ['自然', '天体', '象形']
   },
   {
-    oracleForm: '𠂊',
+    oracleForm: '木',
     modernForm: '木',
     pronunciation: 'mù',
     meaning: '树木；木材',
     etymology: '甲骨文的\"木\"字像一棵树的形状，有根、树干和树冠，是典型的象形字。',
-    imageUrl: 'https://example.com/images/mu.jpg',
+    imageUrl: '/images/oracle/木.png',
     strokeOrder: ['一', '丨', '丿', '乀'],
     difficulty: 1,
     category: '植物',

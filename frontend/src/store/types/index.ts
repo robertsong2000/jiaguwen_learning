@@ -7,6 +7,8 @@ export interface Character {
   meaning: string;
   etymology: string;
   imageUrl: string;
+  hasImage?: boolean;
+  imageAlt?: string;
   strokeOrder: string[];
   difficulty: number;
   category: string;
