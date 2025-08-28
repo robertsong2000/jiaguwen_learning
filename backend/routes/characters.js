@@ -33,7 +33,7 @@ router.get('/search', [
       isActive: true
     })
     .limit(parseInt(limit))
-    .select('modernForm oracleForm meaning imageUrl category difficulty')
+    .select('modernForm oracleForm meaning imageUrl hasImage imageAlt category difficulty')
     .lean();
 
     res.json({
@@ -89,7 +89,7 @@ router.get('/meta/popular', [
     const characters = await Character.find({ isActive: true })
       .sort({ favoriteCount: -1, viewCount: -1 })
       .limit(parseInt(limit))
-      .select('modernForm oracleForm meaning imageUrl category difficulty favoriteCount')
+      .select('modernForm oracleForm meaning imageUrl hasImage imageAlt category difficulty favoriteCount')
       .lean();
 
     res.json({
@@ -150,7 +150,7 @@ router.get('/', [
         .sort(sortOptions)
         .skip(skip)
         .limit(parseInt(limit))
-        .select('modernForm oracleForm meaning imageUrl category difficulty favoriteCount')
+        .select('modernForm oracleForm meaning imageUrl hasImage imageAlt category difficulty favoriteCount')
         .lean(),
       Character.countDocuments(filter)
     ]);
@@ -197,7 +197,7 @@ router.get('/:id', [
       _id: req.params.id, 
       isActive: true 
     })
-    .populate('relatedCharacters', 'modernForm oracleForm imageUrl meaning category')
+    .populate('relatedCharacters', 'modernForm oracleForm imageUrl hasImage imageAlt meaning category')
     .lean();
 
     if (!character) {
