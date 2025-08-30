@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Typography, 
   Card, 
@@ -14,20 +14,16 @@ import {
   Statistic,
   Space,
   Breadcrumb,
-  Modal,
   Tag
 } from 'antd';
 import { 
   CheckCircleOutlined, 
   CloseCircleOutlined, 
   TrophyOutlined,
-  HomeOutlined,
-  ClockCircleOutlined,
-  QuestionCircleOutlined
+  HomeOutlined
 } from '@ant-design/icons';
 import { motion } from 'framer-motion';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../store';
+import { useParams, Link } from 'react-router-dom';
 import OracleImage from '../components/Common/OracleImage';
 
 const { Title, Paragraph, Text } = Typography;
@@ -38,6 +34,7 @@ interface Question {
   type: 'single' | 'multiple' | 'input';
   question: string;
   oracleCharacter?: string;
+  modernCharacter?: string; // 用于显示现代汉字
   options?: string[];
   correctAnswer: string | string[];
   explanation: string;
@@ -55,7 +52,6 @@ interface PracticeSession {
 
 const PracticeDetailPage: React.FC = () => {
   const { practiceType } = useParams<{ practiceType: string }>();
-  const navigate = useNavigate();
   const [practiceSession, setPracticeSession] = useState<PracticeSession | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<{ [key: string]: string | string[] }>({});
@@ -64,7 +60,32 @@ const PracticeDetailPage: React.FC = () => {
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
-  const { isAuthenticated } = useAppSelector(state => state.user);
+
+  const handleFinishPractice = useCallback(() => {
+    if (!practiceSession) return;
+    
+    let correctCount = 0;
+    practiceSession.questions.forEach(question => {
+      const userAnswer = userAnswers[question.id];
+      if (question.type === 'multiple') {
+        const correctAnswers = Array.isArray(question.correctAnswer) ? question.correctAnswer : [question.correctAnswer];
+        const userAnswerArray = Array.isArray(userAnswer) ? userAnswer : [userAnswer];
+        if (correctAnswers.length === userAnswerArray.length) {
+          const isCorrect = correctAnswers.every(ans => userAnswerArray.includes(ans));
+          if (isCorrect) correctCount++;
+        }
+      } else {
+        if (userAnswer === question.correctAnswer) {
+          correctCount++;
+        }
+      }
+    });
+
+    const finalScore = Math.round((correctCount / practiceSession.questions.length) * 100);
+    setScore(finalScore);
+    setIsFinished(true);
+    setShowResult(true);
+  }, [practiceSession, userAnswers]);
 
   useEffect(() => {
     // 根据练习类型生成对应的练习内容
@@ -193,17 +214,78 @@ const PracticeDetailPage: React.FC = () => {
                 id: '1',
                 type: 'single',
                 question: '现代汉字"火"对应哪个甲骨文字符？',
-                options: ['🔥', '🌊', '🏔️', '🌳'],
-                correctAnswer: '🔥',
+                modernCharacter: '火', // 现代汉字用于题目显示
+                options: ['火', '水', '土', '木'], // 甲骨文选项（现代字标识）
+                correctAnswer: '火',
                 explanation: '火字的甲骨文像燃烧的火焰形状，有向上的火苗。',
                 difficulty: 2
               },
               {
                 id: '2',
+                type: 'single',
+                question: '现代汉字"水"对应哪个甲骨文字符？',
+                modernCharacter: '水',
+                options: ['山', '水', '日', '月'],
+                correctAnswer: '水',
+                explanation: '水字的甲骨文像流动的水流，中间一竖代表主流，两边的点代表水滴。',
+                difficulty: 2
+              },
+              {
+                id: '3',
+                type: 'single',
+                question: '现代汉字"山"对应哪个甲骨文字符？',
+                modernCharacter: '山',
+                options: ['土', '山', '石', '丘'],
+                correctAnswer: '山',
+                explanation: '山字的甲骨文像山峰的轮廓，三个突起代表连绵的山峰。',
+                difficulty: 2
+              },
+              {
+                id: '4',
+                type: 'single',
+                question: '现代汉字"人"对应哪个甲骨文字符？',
+                modernCharacter: '人',
+                options: ['大', '人', '女', '子'],
+                correctAnswer: '人',
+                explanation: '人字的甲骨文像一个侧身而立的人形，突出了人的直立行走特征。',
+                difficulty: 1
+              },
+              {
+                id: '5',
+                type: 'single',
+                question: '现代汉字"日"对应哪个甲骨文字符？',
+                modernCharacter: '日',
+                options: ['月', '日', '星', '云'],
+                correctAnswer: '日',
+                explanation: '日字的甲骨文像太阳的形状，圆形中间有一点，代表太阳的光芒。',
+                difficulty: 1
+              },
+              {
+                id: '6',
+                type: 'single',
+                question: '现代汉字"月"对应哪个甲骨文字符？',
+                modernCharacter: '月',
+                options: ['日', '月', '星', '云'],
+                correctAnswer: '月',
+                explanation: '月字的甲骨文像月牙的形状，弯弯的弧形很好地表现了月亮的特征。',
+                difficulty: 1
+              },
+              {
+                id: '7',
                 type: 'input',
-                question: '请输入"木"字的甲骨文特征描述：',
+                question: '请输入"木"字甲骨文的特征描述：',
+                modernCharacter: '木',
                 correctAnswer: '像树木的形状',
                 explanation: '木字的甲骨文像一棵树，有树干和枝叶。',
+                difficulty: 3
+              },
+              {
+                id: '8',
+                type: 'input',
+                question: '请输入"女"字甲骨文的主要特征：',
+                modernCharacter: '女',
+                correctAnswer: '跪坐的女性形象',
+                explanation: '女字的甲骨文像一个跪坐的女性形象，双手交叉在胸前。',
                 difficulty: 3
               }
             ]
@@ -265,7 +347,7 @@ const PracticeDetailPage: React.FC = () => {
     } else if (timeLeft === 0 && !isFinished) {
       handleFinishPractice();
     }
-  }, [timeLeft, isFinished]);
+  }, [timeLeft, isFinished, handleFinishPractice]);
 
   const handleAnswerChange = (questionId: string, answer: string | string[]) => {
     setUserAnswers(prev => ({
@@ -288,32 +370,6 @@ const PracticeDetailPage: React.FC = () => {
       setCurrentQuestionIndex(prev => prev - 1);
       setShowExplanation(false);
     }
-  };
-
-  const handleFinishPractice = () => {
-    if (!practiceSession) return;
-    
-    let correctCount = 0;
-    practiceSession.questions.forEach(question => {
-      const userAnswer = userAnswers[question.id];
-      if (question.type === 'multiple') {
-        const correctAnswers = Array.isArray(question.correctAnswer) ? question.correctAnswer : [question.correctAnswer];
-        const userAnswerArray = Array.isArray(userAnswer) ? userAnswer : [userAnswer];
-        if (correctAnswers.length === userAnswerArray.length) {
-          const isCorrect = correctAnswers.every(ans => userAnswerArray.includes(ans));
-          if (isCorrect) correctCount++;
-        }
-      } else {
-        if (userAnswer === question.correctAnswer) {
-          correctCount++;
-        }
-      }
-    });
-
-    const finalScore = Math.round((correctCount / practiceSession.questions.length) * 100);
-    setScore(finalScore);
-    setIsFinished(true);
-    setShowResult(true);
   };
 
   const handleRestart = () => {
@@ -493,6 +549,20 @@ const PracticeDetailPage: React.FC = () => {
                 </Paragraph>
               </div>
 
+              {/* 现代汉字显示（用于字符书写练习） */}
+              {currentQuestion.modernCharacter && (
+                <div className="text-center mb-6">
+                  <Card className="inline-block ancient-border" bodyStyle={{ padding: '24px' }}>
+                    <div className="modern-character text-8xl text-ancient font-bold">
+                      {currentQuestion.modernCharacter}
+                    </div>
+                    <div className="text-sm text-muted-ancient mt-2">
+                      现代汉字
+                    </div>
+                  </Card>
+                </div>
+              )}
+
               {/* 甲骨文字符显示 */}
               {currentQuestion.oracleCharacter && (
                 <div className="text-center mb-6">
@@ -522,9 +592,35 @@ const PracticeDetailPage: React.FC = () => {
                     <Row gutter={[16, 16]}>
                       {currentQuestion.options.map((option, index) => (
                         <Col xs={24} sm={12} key={index}>
-                          <Radio value={option} className="text-lg">
-                            {option}
-                          </Radio>
+                          <Card 
+                            className={`cursor-pointer oracle-option-card transition-all duration-300 hover:shadow-lg ${
+                              userAnswers[currentQuestion.id] === option ? 'border-ancient bg-ancient-light' : 'border-gray-300'
+                            }`}
+                            bodyStyle={{ padding: '16px' }}
+                            onClick={() => handleAnswerChange(currentQuestion.id, option)}
+                          >
+                            <Radio 
+                              value={option} 
+                              className="hidden"
+                              checked={userAnswers[currentQuestion.id] === option}
+                            />
+                            <div className="text-center">
+                              <div className="oracle-image-container mb-3">
+                                <OracleImage 
+                                  character={{
+                                    modernForm: option,
+                                    imageUrl: `/images/oracle/${option}.png`,
+                                    hasImage: true,
+                                    imageAlt: `${option}字的甲骨文字形`
+                                  }}
+                                  size="medium"
+                                  showFallback={true}
+                                />
+                              </div>
+                              <div className="text-lg font-medium text-ancient">{option}</div>
+                              <div className="text-sm text-muted-ancient">现代汉字</div>
+                            </div>
+                          </Card>
                         </Col>
                       ))}
                     </Row>
@@ -538,13 +634,48 @@ const PracticeDetailPage: React.FC = () => {
                     className="w-full"
                   >
                     <Row gutter={[16, 16]}>
-                      {currentQuestion.options.map((option, index) => (
-                        <Col xs={24} sm={12} key={index}>
-                          <Checkbox value={option} className="text-lg">
-                            {option}
-                          </Checkbox>
-                        </Col>
-                      ))}
+                      {currentQuestion.options.map((option, index) => {
+                        const isSelected = (userAnswers[currentQuestion.id] as string[] || []).includes(option);
+                        return (
+                          <Col xs={24} sm={12} md={8} key={index}>
+                            <Card 
+                              className={`cursor-pointer oracle-option-card transition-all duration-300 hover:shadow-lg ${
+                                isSelected ? 'border-ancient bg-ancient-light' : 'border-gray-300'
+                              }`}
+                              bodyStyle={{ padding: '16px' }}
+                              onClick={() => {
+                                const currentValues = (userAnswers[currentQuestion.id] as string[]) || [];
+                                const newValues = currentValues.includes(option)
+                                  ? currentValues.filter(v => v !== option)
+                                  : [...currentValues, option];
+                                handleAnswerChange(currentQuestion.id, newValues);
+                              }}
+                            >
+                              <Checkbox 
+                                value={option} 
+                                className="hidden"
+                                checked={isSelected}
+                              />
+                              <div className="text-center">
+                                <div className="oracle-image-container mb-3">
+                                  <OracleImage 
+                                    character={{
+                                      modernForm: option,
+                                      imageUrl: `/images/oracle/${option}.png`,
+                                      hasImage: true,
+                                      imageAlt: `${option}字的甲骨文字形`
+                                    }}
+                                    size="medium"
+                                    showFallback={true}
+                                  />
+                                </div>
+                                <div className="text-lg font-medium text-ancient">{option}</div>
+                                <div className="text-sm text-muted-ancient">现代汉字</div>
+                              </div>
+                            </Card>
+                          </Col>
+                        );
+                      })}
                     </Row>
                   </Checkbox.Group>
                 )}
