@@ -28,6 +28,7 @@ import {
 import { motion } from 'framer-motion';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../store';
+import OracleImage from '../components/Common/OracleImage';
 
 const { Title, Paragraph, Text } = Typography;
 const { Countdown } = Statistic;
@@ -81,7 +82,7 @@ const PracticeDetailPage: React.FC = () => {
                 id: '1',
                 type: 'single',
                 question: '这个甲骨文字符对应哪个现代汉字？',
-                oracleCharacter: '人',
+                oracleCharacter: '人', // 对应的现代字符，用于获取甲骨文图片
                 options: ['人', '大', '小', '子'],
                 correctAnswer: '人',
                 explanation: '这个字符像一个人的侧面形象，头、身体、手臂和腿都很清晰，所以是"人"字。',
@@ -121,11 +122,61 @@ const PracticeDetailPage: React.FC = () => {
                 id: '5',
                 type: 'single',
                 question: '选择对应的现代汉字：',
-                oracleCharacter: '鸟',
-                options: ['鱼', '鸟', '虫', '兽'],
-                correctAnswer: '鸟',
-                explanation: '可以看出鸟的头部、身体、翅膀和尾巴的特征。',
+                oracleCharacter: '火',
+                options: ['水', '火', '土', '木'],
+                correctAnswer: '火',
+                explanation: '可以看出火焰向上燃烧的动态形状，是典型的火字甲骨文。',
                 difficulty: 2
+              },
+              {
+                id: '6',
+                type: 'single',
+                question: '这个甲骨文字符是？',
+                oracleCharacter: '木',
+                options: ['草', '木', '竹', '花'],
+                correctAnswer: '木',
+                explanation: '字符像一棵树的形状，有树干、树根和树枝，是木字的甲骨文。',
+                difficulty: 2
+              },
+              {
+                id: '7',
+                type: 'single',
+                question: '请选择正确答案：',
+                oracleCharacter: '大',
+                options: ['小', '中', '大', '少'],
+                correctAnswer: '大',
+                explanation: '这个字符像一个人张开双臂双腿站立的样子，表示人的最大形态。',
+                difficulty: 1
+              },
+              {
+                id: '8',
+                type: 'single',
+                question: '这个字符的含义是？',
+                oracleCharacter: '月',
+                options: ['太阳', '月亮', '星星', '彩虹'],
+                correctAnswer: '月亮',
+                explanation: '字符像月牙的形状，弯弯的弧形很好地表现了月亮的特征。',
+                difficulty: 1
+              },
+              {
+                id: '9',
+                type: 'single',
+                question: '选择对应的现代汉字：',
+                oracleCharacter: '土',
+                options: ['石', '土', '沙', '泥'],
+                correctAnswer: '土',
+                explanation: '这个字符像一个土堆的形状，或者是神位的象征。',
+                difficulty: 2
+              },
+              {
+                id: '10',
+                type: 'single',
+                question: '这个甲骨文字符代表？',
+                oracleCharacter: '女',
+                options: ['男', '女', '老', '少'],
+                correctAnswer: '女',
+                explanation: '字符像一个跪坐的女性形象，双手交叉在胸前，体现了古代女性的典型姿态。',
+                difficulty: 1
               }
             ]
           };
@@ -174,6 +225,16 @@ const PracticeDetailPage: React.FC = () => {
                 options: ['有头部', '有手臂', '有腿部', '呈站立姿态'],
                 correctAnswer: ['有头部', '有手臂', '有腿部', '呈站立姿态'],
                 explanation: '甲骨文的"人"字确实具备这些人体特征。',
+                difficulty: 2
+              },
+              {
+                id: '2',
+                type: 'multiple',
+                question: '以下哪些是"日"字甲骨文的特征？',
+                oracleCharacter: '日',
+                options: ['圆形或方形', '中间有点或线', '表示光芒', '像太阳形状'],
+                correctAnswer: ['圆形或方形', '中间有点或线', '表示光芒', '像太阳形状'],
+                explanation: '甲骨文的"日"字确实具备这些太阳的特征。',
                 difficulty: 2
               }
             ]
@@ -305,8 +366,17 @@ const PracticeDetailPage: React.FC = () => {
                   </div>
                   <Paragraph className="text-muted-ancient mb-2">{question.question}</Paragraph>
                   {question.oracleCharacter && (
-                    <div className="oracle-character text-4xl text-ancient text-center mb-2">
-                      {question.oracleCharacter}
+                    <div className="text-center mb-2">
+                      <OracleImage 
+                        character={{
+                          modernForm: question.oracleCharacter,
+                          imageUrl: `/images/oracle/${question.oracleCharacter}.png`,
+                          hasImage: true,
+                          imageAlt: `${question.oracleCharacter}字的甲骨文字形`
+                        }}
+                        size="medium"
+                        showFallback={true}
+                      />
                     </div>
                   )}
                   <div className="text-sm">
@@ -427,9 +497,16 @@ const PracticeDetailPage: React.FC = () => {
               {currentQuestion.oracleCharacter && (
                 <div className="text-center mb-6">
                   <Card className="inline-block ancient-border" bodyStyle={{ padding: '24px' }}>
-                    <div className="oracle-character text-8xl text-ancient">
-                      {currentQuestion.oracleCharacter}
-                    </div>
+                    <OracleImage 
+                      character={{
+                        modernForm: currentQuestion.oracleCharacter,
+                        imageUrl: `/images/oracle/${currentQuestion.oracleCharacter}.png`,
+                        hasImage: true,
+                        imageAlt: `${currentQuestion.oracleCharacter}字的甲骨文字形`
+                      }}
+                      size="large"
+                      showFallback={true}
+                    />
                   </Card>
                 </div>
               )}
